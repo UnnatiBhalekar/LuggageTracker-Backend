@@ -1,50 +1,34 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-public class item {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Item {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int item_id;
 	
+	@Column(nullable = false)
 	private String item_name;
 	
+	@Column(nullable = false)
 	private float weight;
-
-	public item(int item_id, String item_name, float weight) {
-		super();
-		this.item_id = item_id;
-		this.item_name = item_name;
-		this.weight = weight;
-	}
-
-	public int getItem_id() {
-		return item_id;
-	}
-
-	public void setItem_id(int item_id) {
-		this.item_id = item_id;
-	}
-
-	public String getItem_name() {
-		return item_name;
-	}
-
-	public void setItem_name(String item_name) {
-		this.item_name = item_name;
-	}
-
-	public float getWeight() {
-		return weight;
-	}
-
-	public void setWeight(float weight) {
-		this.weight = weight;
-	}
 	
-	
+	@Column(nullable = false)
+	private int quantity;
+
 }

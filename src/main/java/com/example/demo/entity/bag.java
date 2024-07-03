@@ -1,39 +1,29 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-public class bag {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Bag {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int bag_id;
 	
+	@Column(nullable = false)
 	private float maxCapacity;
-
-	public bag(int bag_id, float maxCapacity) {
-		super();
-		this.bag_id = bag_id;
-		this.maxCapacity = maxCapacity;
-	}
-
-	public int getBag_id() {
-		return bag_id;
-	}
-
-	public void setBag_id(int bag_id) {
-		this.bag_id = bag_id;
-	}
-
-	public float getMaxCapacity() {
-		return maxCapacity;
-	}
-
-	public void setMaxCapacity(float maxCapacity) {
-		this.maxCapacity = maxCapacity;
-	}
 	
 	
 }
