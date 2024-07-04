@@ -35,10 +35,16 @@ public class ItemService {
 		throw new RuntimeException("Item not Found with ID "+item_id);
 	}
 	
-	//update item by id
-	public Item updateItembyId(Item updated_item) {
-		return itemRepository.save(updated_item);
-	}
+//	//update item by id
+//	public Item updateItembyId(int id, Item updated_item) {
+//		
+//		Optional<Item> item  = itemRepository.findById(id);
+//		Item i1=new Item();
+//		if(item.isPresent()) {
+//			
+//		}
+////		return itemRepository.save(updated_item);
+//	}
 	
 	//delete item by id
 	public void deleteItemById(Integer item_id) {
