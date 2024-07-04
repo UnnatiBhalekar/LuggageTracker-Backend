@@ -11,51 +11,49 @@ import com.example.demo.repository.ItemRepository;
 
 @Service
 public class ItemService {
-	
+
 	@Autowired
 	private ItemRepository itemRepository;
-	
-	//create an item
+
+	// create an item
 	public Item createItem(Item item) {
 		return itemRepository.save(item);
 	}
-	
-	//get all items
-	public List<Item> getAllItems(){
+
+	// get all items
+	public List<Item> getAllItems() {
 		return itemRepository.findAll();
-		
+
 	}
-	
-	//get item by id
-	public Item getItemById(Integer item_id) {
-		Optional<Item> item = itemRepository.findById(item_id);
-		if(item.isPresent()) {
-			return item.get();
+
+	// get item by id
+	public Optional<Item> getItemById(int item_id) {
+		return itemRepository.findById(item_id);
+	}
+
+	// update item by id
+	public Item updateItemById(int id, Item updated_item) {
+
+		Optional<Item> existing_item = itemRepository.findById(id);
+		if (existing_item.isPresent()) {
+			Item item = existing_item.get();
+			item.setItem_name(updated_item.getItem_name());
+			item.setWeight(updated_item.getWeight());
+			item.setQuantity(updated_item.getQuantity());
+			return itemRepository.save(item);
+		} else {
+			throw new RuntimeException("Item not found");
 		}
-		throw new RuntimeException("Item not Found with ID "+item_id);
+
 	}
-	
-//	//update item by id
-//	public Item updateItembyId(int id, Item updated_item) {
-//		
-//		Optional<Item> item  = itemRepository.findById(id);
-//		Item i1=new Item();
-//		if(item.isPresent()) {
-//			
-//		}
-////		return itemRepository.save(updated_item);
-//	}
-	
-	//delete item by id
-	public void deleteItemById(Integer item_id) {
-		Optional<Item> item = itemRepository.findById(item_id);
-		if(item.isPresent()) {
-			itemRepository.deleteById(item_id);
-		}
-		throw new RuntimeException("Item not Found with ID "+item_id);
+
+	// delete item by id
+	public void deleteItemById(int item_id) {
+		itemRepository.deleteById(item_id);
+
 	}
-	
-	//delete all items 
+
+	// delete all items
 	public void deleteAllItems() {
 		itemRepository.deleteAll();
 	}
