@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Bag;
+import com.example.demo.entity.BagType;
 import com.example.demo.repository.BagRepository;
 
 @Service
@@ -54,5 +55,10 @@ public class BagService {
 	// delete all bags
 	public void deleteAllBags() {
 		bagRepository.deleteAll();
+	}
+
+	// get the bag type
+	public List<Bag> getBagType(BagType bagType) {
+		return bagRepository.findByBagType(bagType);
 	}
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Bag;
+import com.example.demo.entity.BagType;
 import com.example.demo.service.BagService;
 
 @RestController
@@ -93,5 +94,18 @@ public class BagController {
 		bagService.deleteAllBags();
 		return ResponseEntity.ok("All bags deleted successfully");
 	}
+	
+	/**
+	 * Get bagType by bagType
+	 * 
+	 * @return the list of bag with the given bagType
+	 */
+	@GetMapping("/bag/type/{bagType}")
+	public ResponseEntity<List<Bag>> getBagType(@PathVariable String bagType) {
+        BagType type = BagType.valueOf(bagType.toUpperCase());
+        List<Bag> bags = bagService.getBagType(type);
+        return ResponseEntity.ok(bags);
+	}
+
 
 }
