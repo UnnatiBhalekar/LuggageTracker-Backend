@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.BagItem;
+import com.example.demo.entity.BagWeightAndSpaceDTO;
 import com.example.demo.service.BagItemService;
 
 @RestController
@@ -57,5 +58,17 @@ public class BagItemController {
 		}
 		return ResponseEntity.ok(itemsInBag);
 	}
+	
+	   /**
+     * Retrieves the total weight and available space in a specified bag based on the given bagId.
+     * 
+     * @param bagId The ID of the bag.
+     * @return ResponseEntity with BagWeightAndSpaceDTO containing total weight and available space.
+     */
+    @GetMapping("/weight/space/{bagId}")
+    public ResponseEntity<BagWeightAndSpaceDTO> getWeightAndAvailableSpace(@PathVariable int bagId) {
+        BagWeightAndSpaceDTO bagWeightAndSpace = bagItemService.getWeightAndAvailableSpace(bagId);
+        return ResponseEntity.ok(bagWeightAndSpace);
+    }
 
 }

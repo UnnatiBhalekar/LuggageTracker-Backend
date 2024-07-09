@@ -15,4 +15,8 @@ public interface BagItemRepository extends JpaRepository<BagItem, Integer> {
 	@Query("SELECT i.item_name, i.weight " + "FROM BagItem bi " + "JOIN bi.item i " + "WHERE bi.bag.bag_id = :bagId")
 	List<Object[]> findItemsByBagId(@Param("bagId") int bagId);
 
+	@Query("SELECT SUM(i.weight * i.quantity)" + "FROM BagItem bi " + "JOIN bi.item i "
+			+ "WHERE bi.bag.bag_id = :bagId")
+	Float findTotalWeightByBagId(@Param("bagId") int bagId);
+
 }

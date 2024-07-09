@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.BagItem;
+import com.example.demo.entity.BagWeightAndSpaceDTO;
 import com.example.demo.entity.Bag;
 import com.example.demo.entity.Item;
 import com.example.demo.repository.BagItemRepository;
@@ -40,6 +41,19 @@ public class BagItemService {
 	public List<Object[]> itemsinEachBag(int bagId) {
 		return bagItemRepository.findItemsByBagId(bagId);
 
+	}
+
+	// finding the bag weight and space available
+	public BagWeightAndSpaceDTO getWeightAndAvailableSpace(int bagId) {
+		Bag bag = bagRepository.findById(bagId).orElseThrow(() -> new RuntimeException("Bag not found"));
+		Float totalWeight = bagItemRepository.findTotalWeightByBagId(bagId);
+
+		if (totalWeight == null) {
+			totalWeight = 0.0f;
+		}
+
+		float availableSpace = bag.getMaxCapacity() - totalWeight;
+		return new BagWeightAndSpaceDTO(totalWeight, availableSpace);
 	}
 
 }
