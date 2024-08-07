@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.DTO.BagItemDTO;
 import com.example.demo.entity.BagItem;
 import com.example.demo.entity.BagWeightAndSpaceDTO;
 import com.example.demo.service.BagItemService;
@@ -33,12 +34,12 @@ public class BagItemController {
 	 *         successfully, or an error message if the bag or item is not found.
 	 */
 	@PostMapping("/add/{bagId}/{itemId}")
-	public ResponseEntity<String> addItemToBag(@PathVariable int bagId, @PathVariable int itemId) {
+	public ResponseEntity<BagItemDTO> addItemToBag(@PathVariable int bagId, @PathVariable int itemId) {
 		try {
-			BagItem bagItem = bagItemService.addItemToBag(bagId, itemId);
-			return ResponseEntity.status(HttpStatus.OK).body("Item Added Successfully");
+			BagItemDTO bagItemDTO = bagItemService.addItemToBag(bagId, itemId);
+			return ResponseEntity.status(HttpStatus.OK).body(bagItemDTO);
 		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
 
@@ -58,17 +59,19 @@ public class BagItemController {
 		}
 		return ResponseEntity.ok(itemsInBag);
 	}
-	
-	   /**
-     * Retrieves the total weight and available space in a specified bag based on the given bagId.
-     * 
-     * @param bagId The ID of the bag.
-     * @return ResponseEntity with BagWeightAndSpaceDTO containing total weight and available space.
-     */
-    @GetMapping("/weight/space/{bagId}")
-    public ResponseEntity<BagWeightAndSpaceDTO> getWeightAndAvailableSpace(@PathVariable int bagId) {
-        BagWeightAndSpaceDTO bagWeightAndSpace = bagItemService.getWeightAndAvailableSpace(bagId);
-        return ResponseEntity.ok(bagWeightAndSpace);
-    }
+
+	/**
+	 * Retrieves the total weight and available space in a specified bag based on
+	 * the given bagId.
+	 * 
+	 * @param bagId The ID of the bag.
+	 * @return ResponseEntity with BagWeightAndSpaceDTO containing total weight and
+	 *         available space.
+	 */
+	@GetMapping("/weight/space/{bagId}")
+	public ResponseEntity<BagWeightAndSpaceDTO> getWeightAndAvailableSpace(@PathVariable int bagId) {
+		BagWeightAndSpaceDTO bagWeightAndSpace = bagItemService.getWeightAndAvailableSpace(bagId);
+		return ResponseEntity.ok(bagWeightAndSpace);
+	}
 
 }

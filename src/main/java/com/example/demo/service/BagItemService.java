@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.BagItem;
 import com.example.demo.entity.BagWeightAndSpaceDTO;
+import com.example.DTO.BagItemDTO;
+import com.example.DTO.ItemDTO;
 import com.example.demo.entity.Bag;
 import com.example.demo.entity.Item;
 import com.example.demo.repository.BagItemRepository;
@@ -27,14 +29,17 @@ public class BagItemService {
 	private BagRepository bagRepository;
 
 	// adding item to bag
-	public BagItem addItemToBag(int bagId, int itemId) {
+	public BagItemDTO addItemToBag(int bagId, int itemId) {
 		Bag bag = bagRepository.findById(bagId).orElseThrow(() -> new RuntimeException("Bag not found"));
 		Item item = itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("Item not found"));
 
 		BagItem bagItem = new BagItem();
 		bagItem.setBag(bag);
 		bagItem.setItem(item);
-		return bagItemRepository.save(bagItem);
+		BagItem savedBagItem = bagItemRepository.save(bagItem);
+
+		ItemDTO itemDTO = new ItemDTO(item.getItem_id(), item.getItem_name(), item.getWeight(), item.getQuantity());
+		return new BagItemDTO(savedBagItem.getBag_item_id(), itemDTO);
 	}
 
 	// items present in each bag
