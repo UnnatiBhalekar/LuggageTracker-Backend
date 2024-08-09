@@ -35,7 +35,13 @@ public class BagItemService {
 	public BagItemDTO addItemToBag(int bagId, int itemId) {
 		Bag bag = bagRepository.findById(bagId).orElseThrow(() -> new RuntimeException("Bag not found"));
 		Item item = itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("Item not found"));
-
+		
+		// Checking if the item is already present in the bag
+		boolean isItemAlreadyPresent = bagItemRepository.existsByBagAndItem(bag, item);
+		if(isItemAlreadyPresent) {
+			throw new RuntimeException("Item is already present in the bag");
+		}
+		
 		BagItem bagItem = new BagItem();
 		bagItem.setBag(bag);
 		bagItem.setItem(item);

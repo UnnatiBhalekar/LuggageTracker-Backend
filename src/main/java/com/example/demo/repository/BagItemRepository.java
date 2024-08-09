@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.entity.Bag;
 import com.example.demo.entity.BagItem;
+import com.example.demo.entity.Item;
 
 @Repository
 public interface BagItemRepository extends JpaRepository<BagItem, Integer> {
@@ -18,5 +20,7 @@ public interface BagItemRepository extends JpaRepository<BagItem, Integer> {
 	@Query("SELECT SUM(i.weight * i.quantity)" + "FROM BagItem bi " + "JOIN bi.item i "
 			+ "WHERE bi.bag.bag_id = :bagId")
 	Float findTotalWeightByBagId(@Param("bagId") int bagId);
+	
+	boolean existsByBagAndItem(Bag bag, Item item);
 
 }
