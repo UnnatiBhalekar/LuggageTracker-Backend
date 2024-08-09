@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,9 +55,9 @@ public class BagItemController {
 	 *         or a 404 status if no items are found.
 	 */
 	@GetMapping("/bag/items/{bagId}")
-	public ResponseEntity<List<Object[]>> getItemsByBagId(@PathVariable int bagId) {
-		List<Object[]> itemsInBag = bagItemService.itemsinEachBag(bagId);
-		if (itemsInBag.isEmpty()) {
+	public ResponseEntity<List<Map<String, Object>>> getItemsByBagId(@PathVariable int bagId) {
+		List<Map<String, Object>> itemsInBag = bagItemService.itemsinEachBag(bagId);
+		if(itemsInBag.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 		return ResponseEntity.ok(itemsInBag);

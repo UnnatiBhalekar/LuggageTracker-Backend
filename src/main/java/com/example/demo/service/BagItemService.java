@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,9 +46,14 @@ public class BagItemService {
 	}
 
 	// items present in each bag
-	public List<Object[]> itemsinEachBag(int bagId) {
-		return bagItemRepository.findItemsByBagId(bagId);
-
+	public List<Map<String, Object>> itemsinEachBag(int bagId) {
+		List<Object[]> rawItems = bagItemRepository.findItemsByBagId(bagId);
+		return rawItems.stream().map(item -> {
+			Map<String, Object> itemMap = new HashMap<>();
+			itemMap.put("itemName", item[0]);
+			itemMap.put("weight", item[1]);
+			return itemMap;
+		}).collect(Collectors.toList());
 	}
 
 	// finding the bag weight and space available
