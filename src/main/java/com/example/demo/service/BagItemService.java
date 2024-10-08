@@ -74,5 +74,11 @@ public class BagItemService {
 		float availableSpace = bag.getMaxCapacity() - totalWeight;
 		return new BagWeightAndSpaceDTO(totalWeight, availableSpace);
 	}
+	
+	//Deleting item from a bag based on item id
+	public void deleteItemFromBag(int bagId, String itemName) {
+		BagItem bagItem =  bagItemRepository.findBagIdAndItemName(bagId, itemName).orElseThrow(() -> new RuntimeException("Item not found "));
+		bagItemRepository.delete(bagItem);
+	}
 
 }

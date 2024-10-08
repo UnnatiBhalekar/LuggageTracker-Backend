@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,5 +77,17 @@ public class BagItemController {
 		BagWeightAndSpaceDTO bagWeightAndSpace = bagItemService.getWeightAndAvailableSpace(bagId);
 		return ResponseEntity.ok(bagWeightAndSpace);
 	}
-
+	
+	/**
+	 * Deletes the item in a specified bag based on
+	 * the given bagId and itemId.
+	 * 
+	 * @param bagId The ID of the bag, itemId which is ID of the item
+	 * @return ResponseEntity : Item from the particular bag is deleted
+	 */
+	@DeleteMapping("/{bagId}/items/{itemName}")
+	public ResponseEntity<String> deleteItemFromBag(@PathVariable int bagId, @PathVariable String itemName){
+		bagItemService.deleteItemFromBag(bagId, itemName);
+		return ResponseEntity.ok("Item deleted successfully from Bag "+bagId);
+	}
 }

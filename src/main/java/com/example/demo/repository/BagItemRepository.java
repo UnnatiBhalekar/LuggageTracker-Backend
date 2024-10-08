@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +23,9 @@ public interface BagItemRepository extends JpaRepository<BagItem, Integer> {
 	Float findTotalWeightByBagId(@Param("bagId") int bagId);
 	
 	boolean existsByBagAndItem(Bag bag, Item item);
+	
+	@Query("SELECT bi FROM BagItem bi WHERE bi.bag.bag_id = :bagId AND bi.item.item_name = :itemName")
+	Optional<BagItem> findBagIdAndItemName(@Param("bagId") int bagId, @Param("itemName") String itemName);
+
 
 }
